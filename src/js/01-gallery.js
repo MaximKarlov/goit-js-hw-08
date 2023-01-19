@@ -20,4 +20,8 @@ const createImgCards = galleryItems
 
 galleryRef.insertAdjacentHTML('afterbegin', createImgCards);
 
-const gallery = new SimpleLightbox('.gallery a', { captionsData: 'alt' });
+const gallery = new SimpleLightbox('.gallery a', {
+  // captionsData: 'alt',
+  // widthRatio: 0.5,
+  // captionsDelay: 5000,
+});
