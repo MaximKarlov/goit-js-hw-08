@@ -21,7 +21,7 @@ const createImgCards = galleryItems
 galleryRef.insertAdjacentHTML('afterbegin', createImgCards);
 
 const gallery = new SimpleLightbox('.gallery a', {
-  // captionsData: 'alt',
+  captionsData: 'alt',
   // widthRatio: 0.5,
-  // captionsDelay: 5000,
+  captionsDelay: 1000,
 });
