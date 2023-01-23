@@ -4,24 +4,26 @@ import 'simplelightbox/dist/simple-lightbox.min.css';
 
 const galleryRef = document.querySelector('.gallery');
 
-const createImgCards = galleryItems
-  .map(({ preview, original, description }) => {
-    return `<a class="gallery__item" rel="noopener noreferrer" href= "${original}">
+function createImgCards(galleryItems) {
+  return galleryItems
+    .map(({ preview, original, description }) => {
+      return `<a class="gallery__item" rel="noopener noreferrer" href="${original}">
     <img
       class="gallery__image"
       src="${preview}"
-      href="${original}"
+      data-source="${original}"
       alt = "${description}"
      "
     />
   </a>`;
-  })
-  .join('');
+    })
+    .join('');
+}
 
-galleryRef.insertAdjacentHTML('afterbegin', createImgCards);
+const cardsMakeup = createImgCards(galleryItems);
+galleryRef.innerHTML = cardsMakeup;
 
 const gallery = new SimpleLightbox('.gallery a', {
   captionsData: 'alt',
-  // widthRatio: 0.5,
-  captionsDelay: 1000,
+  captionDelay: 500,
 });
