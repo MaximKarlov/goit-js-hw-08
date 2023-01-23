@@ -10,18 +10,6 @@ const messagesUrl = document.querySelector('[name=message]');
 const emailUrl = document.querySelector('[name=email]');
 const btnUrl = document.querySelector('button');
 
-// messagesUrl.addEventListener('input', event => {
-//   objNow.message = event.currentTarget.value;
-//   const throt_fun = _.throttle(function () {
-//     Storages.save(storageName, objNow);
-//   }, 2000);
-//   throt_fun();
-// });
-// emailUrl.addEventListener('input', event => {
-//   objNow.email = event.currentTarget.value;
-//   setTimeout(Storages.save(storageName, objNow), 500);
-// });
-
 messagesUrl.addEventListener('input', throttle(dataOnForm, 500));
 emailUrl.addEventListener('input', throttle(dataOnForm, 500));
 
