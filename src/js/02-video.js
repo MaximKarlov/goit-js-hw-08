@@ -14,9 +14,8 @@ const throt_fun = _.throttle(function () {
   player
     .getCurrentTime()
     .then(function (seconds) {
-      localStorage.setItem('seconds-current-time', seconds | 0);
       localStorage.setItem('videoplayer-current-time', seconds | 0);
-      console.log('Seconds: ', seconds | 0);
+      console.log('saved seconds: ', seconds | 0);
       // seconds = the current playback position
     })
     .catch(function (error) {
@@ -26,3 +25,7 @@ const throt_fun = _.throttle(function () {
 }, 1000);
 
 player.on('timeupdate', throt_fun);
+player.on('timeupdate', function (data) {
+  localStorage.setItem('seconds-current-time', data.seconds);
+  console.log('true seconds: ', data.seconds);
+});
