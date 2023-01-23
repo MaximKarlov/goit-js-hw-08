@@ -1,5 +1,5 @@
 import * as Storages from './storage.js';
-const _ = require('lodash');
+import throttle from 'lodash.throttle';
 let objNow = {
   email: [],
   message: [],
@@ -10,34 +10,39 @@ const messagesUrl = document.querySelector('[name=message]');
 const emailUrl = document.querySelector('[name=email]');
 const btnUrl = document.querySelector('button');
 
-messagesUrl.addEventListener('input', event => {
-  objNow.message = event.currentTarget.value;
-  const throt_fun1 = _.throttle(function () {
-    Storages.save(storageName, objNow);
-  }, 500);
-  throt_fun1();
-});
+// messagesUrl.addEventListener('input', event => {
+//   objNow.message = event.currentTarget.value;
+//   const throt_fun = _.throttle(function () {
+//     Storages.save(storageName, objNow);
+//   }, 2000);
+//   throt_fun();
+// });
+// emailUrl.addEventListener('input', event => {
+//   objNow.email = event.currentTarget.value;
+//   setTimeout(Storages.save(storageName, objNow), 500);
+// });
 
-emailUrl.addEventListener('input', event => {
-  objNow.email = event.currentTarget.value;
-  setTimeout(Storages.save(storageName, objNow), 500);
-});
+messagesUrl.addEventListener('input', throttle(dataOnForm, 500));
+emailUrl.addEventListener('input', throttle(dataOnForm, 500));
+
+function dataOnForm() {
+  objNow.message = messagesUrl.value;
+  objNow.email = emailUrl.value;
+  Storages.save(storageName, objNow);
+}
 
 btnUrl.addEventListener('click', e => {
   e.preventDefault();
-
   if (emailUrl.value === '' || messagesUrl.value === '') {
     alert('Please fill  email or message');
+  }
+  if (!(emailUrl.value.includes('@') && emailUrl.value.includes('.'))) {
+    alert('Please fill in the email field correctly');
   } else {
-    if (!(emailUrl.value.includes('@') && emailUrl.value.includes('.'))) {
-      alert('Please fill in the email field correctly');
-    } else {
-      Storages.save(storageName, objNow);
-      console.log(`email: ${objNow.email}\n message: ${objNow.message}\n`);
-      localStorage.clear();
-      messagesUrl.value = emailUrl.value = '';
-      objNow.message = objNow.email = [];
-    }
+    console.log(`email: ${objNow.email}\n message: ${objNow.message}\n`);
+    localStorage.clear();
+    messagesUrl.value = emailUrl.value = '';
+    objNow.message = objNow.email = [];
   }
 });
 
